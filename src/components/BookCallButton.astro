@@ -1,0 +1,21 @@
+---
+import Button from './Button.astro';
+import { BOOKING_URL } from '../lib/constants';
+
+interface Props {
+  variant?: 'primary' | 'outline' | 'ghost';
+  size?: 'default' | 'sm';
+  label?: string;
+}
+
+const { variant = 'primary', size = 'default', label = 'Book a discovery call' } = Astro.props;
+---
+<Button
+  variant={variant}
+  size={size}
+  href={BOOKING_URL}
+  target="_blank"
+  rel="noopener"
+>
+  {label}
+</Button>

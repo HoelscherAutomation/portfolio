@@ -1,0 +1,60 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+const valueProps = [
+  {
+    title: 'You own what we build.',
+    body: 'No vendor lock-in. No recurring license fees for your own software.',
+  },
+  {
+    title: 'We speak your language.',
+    body: 'No jargon, no black boxes. You\'re never dependent on us to understand your own systems.',
+  },
+  {
+    title: 'Built by an engineer, not a salesman.',
+    body: 'Every solution designed and built by Jordan Hoelscher — hands-on, end-to-end.',
+  },
+];
+---
+<section id="about" class="bg-bg border-y border-border-subtle">
+  <div class="max-w-container mx-auto px-8 py-24">
+    <div class="grid md:grid-cols-[1fr_auto] gap-12 md:gap-20 items-start">
+      <div class="reveal max-w-2xl">
+        <SectionLabel>About</SectionLabel>
+        <h2 class="mt-4 font-display text-3xl md:text-4xl font-semibold text-text-primary">
+          Built by an engineer, not a salesman.
+        </h2>
+        <div class="mt-6 space-y-4 text-text-secondary leading-relaxed">
+          <p>
+            Hoelscher Automation is a one-person consultancy and product studio based in Ohio. Jordan Hoelscher founded it to build the AI tools small professional services firms actually need — without the enterprise sales theater.
+          </p>
+          <p>
+            Every engagement is designed, scoped, and built by Jordan personally. No account managers, no offshore handoffs, no proposal decks. You talk to the person doing the work.
+          </p>
+          <p>
+            Before Hoelscher Automation, Jordan spent years building production infrastructure and automation systems — running 50+ services, designing self-healing AI agents, and shipping software that has to work unattended at 3 AM.
+          </p>
+        </div>
+      </div>
+
+      <div class="reveal flex justify-center md:justify-end">
+        <img
+          src="/assets/logo/logo-square-navy.png"
+          alt="Hoelscher Automation logo"
+          width="240"
+          height="240"
+          class="rounded-lg w-48 h-48 md:w-60 md:h-60"
+        />
+      </div>
+    </div>
+
+    <div class="reveal mt-16 grid md:grid-cols-3 gap-8">
+      {valueProps.map((vp) => (
+        <div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-2">{vp.title}</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">{vp.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

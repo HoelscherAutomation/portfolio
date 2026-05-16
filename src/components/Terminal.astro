@@ -1,0 +1,65 @@
+---
+interface Line {
+  prompt?: string;
+  ts?: string;
+  text: string;
+  type?: 'cmd' | 'log' | 'ok' | 'warn' | 'output';
+}
+
+interface Props {
+  title?: string;
+  lines: Line[];
+}
+
+const { title = 'cortex — knowledge query', lines } = Astro.props;
+
+const typeColors = {
+  cmd: 'text-text-primary',
+  log: 'text-text-secondary',
+  ok: 'text-ok',
+  warn: 'text-warn',
+  output: 'text-brand-orange-bright',
+} as const;
+---
+<div class="terminal max-w-4xl mx-auto bg-bg-elevated border border-border-default rounded-lg overflow-hidden font-mono text-sm">
+  <div class="flex items-center gap-2 px-4 py-2.5 bg-bg-elevated-hi border-b border-border-default">
+    <span class="block w-2.5 h-2.5 rounded-full bg-err/70"></span>
+    <span class="block w-2.5 h-2.5 rounded-full bg-warn/70"></span>
+    <span class="block w-2.5 h-2.5 rounded-full bg-ok/70"></span>
+    <span class="ml-3 text-xs text-text-muted">{title}</span>
+  </div>
+  <div class="p-5 space-y-1.5 min-h-[280px]">
+    {lines.map((line, i) => (
+      <div
+        class:list={[
+          'terminal-line opacity-0 transition-opacity duration-300',
+          typeColors[line.type ?? 'log'],
+        ]}
+        data-line-index={i}
+      >
+        {line.prompt && <span class="text-brand-orange-bright mr-2">{line.prompt}</span>}
+        {line.ts && <span class="text-text-muted mr-2">{line.ts}</span>}
+        <span>{line.text}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const terminal = entry.target as HTMLElement;
+        const lineEls = terminal.querySelectorAll<HTMLElement>('.terminal-line');
+        lineEls.forEach((el, i) => {
+          setTimeout(() => {
+            el.style.opacity = '1';
+          }, i * 380);
+        });
+        observer.unobserve(terminal);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.terminal').forEach((el) => observer.observe(el));
+</script>

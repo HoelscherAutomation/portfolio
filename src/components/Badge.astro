@@ -1,0 +1,21 @@
+---
+interface Props {
+  variant?: 'brand' | 'blue' | 'muted';
+}
+
+const { variant = 'brand' } = Astro.props;
+
+const variants = {
+  brand: 'bg-brand-orange/[0.12] text-brand-orange-bright border-brand-orange/30',
+  blue: 'bg-brand-blue/[0.12] text-brand-blue border-brand-blue/30',
+  muted: 'bg-bg-elevated text-text-secondary border-border-default',
+} as const;
+---
+<span
+  class:list={[
+    'inline-block px-3 py-1 rounded-full text-xs font-medium tracking-wide border',
+    variants[variant],
+  ]}
+>
+  <slot />
+</span>
