@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import Badge from '../components/Badge.astro';
 import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import BookCallButton from '../components/BookCallButton.astro';
 ---
 <Base
   title="Hoelscher Automation — AI for professional services teams"
@@ -21,6 +23,20 @@ import Button from '../components/Button.astro';
       <Button variant="primary">Primary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
+      <BookCallButton size="sm" />
+    </div>
+    <div class="grid grid-cols-2 gap-4 max-w-2xl">
+      <Card
+        label="Platform"
+        title="Cortex Knowledge"
+        description="Self-hosted document Q&A with mandatory citations."
+        href="/cortex/knowledge"
+      />
+      <Card
+        label="Service"
+        title="Custom Automation"
+        description="Workflow builds for SMB and agency teams."
+      />
     </div>
   </main>
 </Base>
