@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import { COMPANY_LEGAL_NAME, CONSULTING_EMAIL } from '../lib/constants';
+
+const effectiveDate = '2026-05-16';
+---
+<Base
+  title="Privacy Policy | Hoelscher Automation"
+  description="Privacy policy for hoelscherautomation.com — what we collect, how we use it, who we share with."
+  path="/privacy"
+>
+  <article class="max-w-3xl mx-auto px-8 py-20">
+    <p class="font-mono text-xs text-text-muted">Effective: {effectiveDate}</p>
+    <h1 class="mt-4 font-display text-4xl font-semibold text-text-primary">Privacy Policy</h1>
+
+    <div class="mt-10 space-y-8 text-text-secondary leading-relaxed">
+      <section>
+        <p class="text-text-primary">
+          This Privacy Policy describes how {COMPANY_LEGAL_NAME} handles information collected through <strong>hoelscherautomation.com</strong> (the "Site").
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">1. What We Collect</h2>
+        <h3 class="font-medium text-text-primary mt-4 mb-2">Contact form submissions</h3>
+        <p>When you submit the contact form, we collect the name, email address, and message you provide. The form is processed by Formspree (see Section 3).</p>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">Scheduling</h3>
+        <p>When you book a discovery call through our Google Calendar Appointment Schedules link, Google collects your name, email, and any additional information you provide on the booking form. We receive a calendar invitation containing this information.</p>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">Analytics</h3>
+        <p>We use <strong>Cloudflare Web Analytics</strong> to understand aggregate Site usage. Cloudflare collects pageviews, referrer, country, and device type. <strong>Cloudflare Web Analytics does not use cookies, does not collect IP addresses, and does not contain any personally identifiable information.</strong></p>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">Cookies</h3>
+        <p>{COMPANY_LEGAL_NAME} does not set any first-party cookies on the Site. Embedded third-party services (Formspree, Google Calendar) may set their own cookies; see their privacy policies for details.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">2. How We Use Information</h2>
+        <ul class="mt-3 space-y-2 list-disc pl-6">
+          <li>To respond to contact-form inquiries</li>
+          <li>To schedule and conduct discovery calls</li>
+          <li>To understand which parts of the Site are useful and improve them</li>
+          <li>To comply with legal obligations</li>
+        </ul>
+        <p class="mt-3">We do <strong>not</strong> use collected information for advertising, profiling, or any marketing not initiated by you.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">3. Service Providers We Share With</h2>
+        <ul class="mt-3 space-y-3 list-disc pl-6">
+          <li>
+            <strong>Formspree</strong> — processes contact-form submissions.
+            <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener" class="text-brand-orange-bright underline">Formspree privacy policy</a>
+          </li>
+          <li>
+            <strong>Google</strong> — provides calendar booking, font hosting, and (if you click to book) videoconferencing through Google Meet.
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="text-brand-orange-bright underline">Google privacy policy</a>
+          </li>
+          <li>
+            <strong>Cloudflare</strong> — provides analytics and CDN delivery.
+            <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-brand-orange-bright underline">Cloudflare privacy policy</a>
+          </li>
+        </ul>
+        <p class="mt-4">
+          <strong>We do not sell your information.</strong> We do not share information with data brokers, marketing networks, or any third party not listed above.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">4. Data Retention</h2>
+        <p>Contact-form submissions are retained until your inquiry is fully resolved, plus twelve (12) months for reference. Calendar bookings are retained for the duration required by Google Calendar's own retention policies. Cloudflare analytics data is aggregated and does not contain personal information; it is retained per Cloudflare's policies.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">5. Your Rights</h2>
+        <p>You may request that we delete the contact-form submission or scheduling information we hold about you by emailing <a href={`mailto:${CONSULTING_EMAIL}`} class="text-brand-orange-bright underline">{CONSULTING_EMAIL}</a>.</p>
+        <p class="mt-3">If you are a resident of the European Union or the United Kingdom, you have rights under the General Data Protection Regulation (GDPR), including the right to access, rectify, delete, or restrict processing of your personal data, and the right to data portability.</p>
+        <p class="mt-3">If you are a resident of California, you have rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information is collected, the right to delete personal information, and the right to opt out of any sale of personal information (note: we do not sell personal information).</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">6. Cortex Knowledge</h2>
+        <p>This Privacy Policy covers <strong>hoelscherautomation.com</strong>. Cortex Knowledge is a self-hosted software product that runs entirely on customer infrastructure. {COMPANY_LEGAL_NAME} does not have access to customer documents, queries, or any data processed by a Cortex Knowledge installation, unless a customer explicitly provides such data during a support engagement.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">7. Changes to This Policy</h2>
+        <p>{COMPANY_LEGAL_NAME} may update this Privacy Policy from time to time. The "Effective" date at the top of this page reflects the most recent revision. Material changes will be highlighted at the top of this page for at least 30 days following the change.</p>
+      </section>
+
+      <section>
+        <h2 class="font-display text-xl font-semibold text-text-primary mb-3">8. Contact</h2>
+        <p>Questions about this Privacy Policy or requests regarding your personal information: <a href={`mailto:${CONSULTING_EMAIL}`} class="text-brand-orange-bright underline">{CONSULTING_EMAIL}</a></p>
+      </section>
+
+      <p class="pt-8 mt-12 border-t border-border-subtle font-mono text-xs text-text-muted">
+        Effective: {effectiveDate} · © {new Date().getFullYear()} {COMPANY_LEGAL_NAME}
+      </p>
+    </div>
+  </article>
+</Base>
