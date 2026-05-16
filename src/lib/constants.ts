@@ -10,7 +10,12 @@ export const GITHUB_URL = 'https://github.com/HoelscherAutomation';
 
 export const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mrezorre';
 
-// Cloudflare Web Analytics beacon token (filled in Task 24)
+// Cloudflare Web Analytics beacon token. To enable analytics:
+//   1. Sign in to dash.cloudflare.com → Analytics → Web Analytics
+//   2. Add hoelscherautomation.com as a new site
+//   3. Copy the beacon token (long alphanumeric string)
+//   4. Paste it as the value below
+// While empty, the beacon script in Base.astro is not rendered.
 export const CF_ANALYTICS_TOKEN = '';
 
 export const SITE_URL = 'https://hoelscherautomation.com';
