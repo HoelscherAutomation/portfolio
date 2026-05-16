@@ -1,0 +1,35 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import Card from './Card.astro';
+---
+<section id="cortex" class="bg-bg border-y border-border-subtle">
+  <div class="max-w-container mx-auto px-8 py-24">
+    <div class="reveal max-w-2xl">
+      <SectionLabel>Platform</SectionLabel>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl font-semibold text-text-primary">
+        Cortex — tools that run on your infrastructure.
+      </h2>
+      <p class="mt-6 text-lg text-text-secondary leading-relaxed">
+        Cortex is a growing library of self-hosted AI tools built for small professional services firms. Each tool ships as a Docker image, runs on your hardware, and keeps your data inside your firm.
+      </p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-2 gap-6 max-w-4xl">
+      <div class="reveal">
+        <Card
+          label="Available now"
+          title="Cortex Knowledge"
+          description="Self-hosted document Q&A with mandatory citations. Drop in your PDFs and DOCXs, ask questions in plain English, get answers that cite their sources."
+          href="/cortex/knowledge"
+        />
+      </div>
+      <div class="reveal hidden md:flex items-center justify-start">
+        <p class="text-sm text-text-muted italic">
+          More tools coming.
+        </p>
+      </div>
+    </div>
+
+    <p class="md:hidden mt-4 text-sm text-text-muted italic">More tools coming.</p>
+  </div>
+</section>
