@@ -1,0 +1,66 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import Card from './Card.astro';
+
+const packages = [
+  {
+    label: 'Audit',
+    title: 'Automation Audit',
+    description: 'Map workflows, identify automation opportunities, deliver prioritized ROI roadmap. 2–3 weeks.',
+  },
+  {
+    label: 'Build',
+    title: 'Workflow Build',
+    description: 'Design and implement specific automation; integrate with existing tools; documentation and training. 4–8 weeks.',
+  },
+  {
+    label: 'Retainer',
+    title: 'Ongoing Support',
+    description: 'Maintenance and optimization, priority support, new automation builds. Monthly.',
+  },
+];
+
+const steps = [
+  { num: '01', title: 'Discovery', body: 'Understand your workflows, pain, and goals.' },
+  { num: '02', title: 'Proposal', body: 'Clear scope, timeline, and price. No surprises.' },
+  { num: '03', title: 'Build', body: 'Develop and test with regular check-ins.' },
+  { num: '04', title: 'Deliver', body: 'Deployed, documented, your team trained. We don\'t disappear.' },
+];
+---
+<section id="consulting" class="bg-bg-deep">
+  <div class="max-w-container mx-auto px-8 py-24">
+    <div class="reveal max-w-2xl">
+      <SectionLabel>Services</SectionLabel>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl font-semibold text-text-primary">
+        Custom automation, built by an engineer.
+      </h2>
+      <p class="mt-6 text-lg text-text-secondary leading-relaxed">
+        Stop paying people to do what software can do better. We build automation and AI integrations for businesses ready to eliminate manual work, reduce errors, and free their teams to focus on what actually matters.
+      </p>
+    </div>
+
+    <div class="mt-12 grid md:grid-cols-3 gap-4">
+      {packages.map((pkg) => (
+        <div class="reveal">
+          <Card label={pkg.label} title={pkg.title} description={pkg.description} />
+          <a href="#contact" class="block mt-3 text-xs font-medium text-brand-orange-bright hover:text-brand-orange transition-colors duration-default">
+            Discuss this →
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal mt-20">
+      <SectionLabel>How it works</SectionLabel>
+      <div class="mt-6 grid md:grid-cols-4 gap-6">
+        {steps.map((step) => (
+          <div>
+            <div class="font-mono text-2xl text-brand-orange-bright mb-2">{step.num}</div>
+            <h3 class="font-display text-lg font-semibold text-text-primary mb-1">{step.title}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
