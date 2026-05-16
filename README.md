@@ -1,48 +1,81 @@
-# Portfolio Site
+# Hoelscher Automation — Public Website
 
-Personal consulting portfolio for infrastructure and automation services.
+Source for [hoelscherautomation.com](https://hoelscherautomation.com).
+
+Static site built with [Astro 5](https://astro.build) and
+[Tailwind CSS](https://tailwindcss.com). Deployed to GitHub Pages via
+GitHub Actions on every push to `main`.
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Opens at `http://localhost:4321`. Hot reload enabled.
+
+## Production build
+
+```bash
+npm run build       # outputs to dist/
+npm run preview     # serves dist/ for local verification
+```
+
+## Project structure
+
+```
+src/
+├── components/   # Astro components (Nav, Footer, Hero, sections, primitives)
+├── layouts/      # Base.astro — global <head>, fonts, Nav + Footer wrapper
+├── lib/          # constants.ts — shared URLs and identifiers
+├── pages/        # Routes (file-based routing)
+│   ├── index.astro              # /
+│   ├── terms.astro              # /terms
+│   ├── privacy.astro            # /privacy
+│   └── cortex/knowledge.astro   # /cortex/knowledge
+└── styles/       # global.css — Tailwind directives + custom layer
+
+public/           # static assets served as-is
+├── CNAME                        # hoelscherautomation.com
+├── og-image.png                 # 1200×630 social share
+├── favicon.ico, favicon-32.png
+├── robots.txt
+└── assets/logo/                 # brand marks
+
+scripts/
+└── build-og-image.py            # Pillow script to regenerate OG image
+
+docs/
+└── superpowers/                 # design specs and implementation plans
+
+.github/workflows/
+└── deploy.yml                   # build + deploy to GitHub Pages
+```
 
 ## Deployment
 
-Hosted on GitHub Pages with custom domain `portfolio.theburrow.casa`.
+Pushes to `main` trigger the deploy workflow (build → upload artifact →
+deploy to Pages). The repo's Pages settings must be configured as:
 
-### DNS Configuration
+- **Source:** GitHub Actions
+- **Custom domain:** `hoelscherautomation.com`
+- **Enforce HTTPS:** enabled
 
-Add a CNAME record in Cloudflare:
-- **Type:** CNAME
-- **Name:** portfolio
-- **Content:** potatorick.github.io
-- **Proxy status:** DNS only (gray cloud) - required for GitHub Pages
+If switching from the legacy "Deploy from branch" mode, change the Source
+in repo Settings → Pages before merging the first build.
 
-### GitHub Pages Setup
+## Updating content
 
-1. Push this directory to a GitHub repository
-2. Go to Settings > Pages
-3. Source: Deploy from branch (main)
-4. Custom domain: portfolio.theburrow.casa
-5. Enforce HTTPS: Enabled
+- **Copy edits:** edit the relevant `.astro` file under `src/components/`
+  or `src/pages/`. Hot reload picks up changes immediately in `npm run dev`.
+- **URLs, emails, company info:** edit `src/lib/constants.ts`. All
+  references are centralized.
+- **Brand colors / typography:** edit `tailwind.config.mjs`.
+- **OG image:** edit the tagline in `scripts/build-og-image.py` and re-run
+  `python3 scripts/build-og-image.py`; commit the regenerated PNG.
 
-## Contact Form
+## Reference
 
-The contact form uses [Formspree](https://formspree.io) for form handling.
-
-1. Create a free account at formspree.io
-2. Create a new form
-3. Replace `YOUR_FORM_ID` in index.html with your form ID
-
-## Customization
-
-- **Colors:** Edit CSS variables in `:root` at top of style.css
-- **Content:** Edit index.html directly
-- **Pricing:** Update service prices in the services section
-- **Projects:** Add/remove project cards as needed
-
-## Local Development
-
-Simply open `index.html` in a browser. No build step required.
-
-```bash
-# Quick preview
-python3 -m http.server 8000
-# Then open http://localhost:8000
-```
+- Design spec: `docs/superpowers/specs/2026-05-16-website-rework-design.md`
+- Implementation plan: `docs/superpowers/plans/2026-05-16-website-rework.md`
