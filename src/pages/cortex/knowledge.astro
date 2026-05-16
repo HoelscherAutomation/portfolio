@@ -1,0 +1,231 @@
+---
+import Base from '../../layouts/Base.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import Badge from '../../components/Badge.astro';
+import Button from '../../components/Button.astro';
+import Terminal from '../../components/Terminal.astro';
+import { BOOKING_URL } from '../../lib/constants';
+
+const v1Features = [
+  'Document ingestion — PDF, DOCX, TXT, Markdown',
+  'Auto-indexing — new, changed, and removed files reflected automatically',
+  'Citation-required answers with click-through to source passages',
+  'Local user accounts (admin + members)',
+  'Three LLM modes — bring your own Anthropic API key, run on local Ollama, or use our proxy',
+  'Admin dashboard — doc count, index status, users, query log, usage stats',
+  'In-app updates from container registry',
+  'Single-command backup and restore',
+];
+
+const terminalLines = [
+  { prompt: '$', text: 'cortex query "What was our position in the Henderson matter?"', type: 'cmd' as const },
+  { ts: '[14:23:01]', text: 'Searching 4,217 indexed documents...', type: 'log' as const },
+  { ts: '[14:23:02]', text: 'Top matches: smith-v-henderson-brief.pdf, henderson-strategy-memo.docx', type: 'log' as const },
+  { ts: '[14:23:03]', text: 'Synthesizing answer with citations...', type: 'log' as const },
+  { ts: '[14:23:04]', text: 'Answer ready.', type: 'ok' as const },
+  { text: '', type: 'log' as const },
+  { text: 'Our position was that the prior agreement [1] did not extend to', type: 'output' as const },
+  { text: 'consequential damages because the carve-out clause [2] specifically', type: 'output' as const },
+  { text: 'excluded such recovery.', type: 'output' as const },
+  { text: '', type: 'log' as const },
+  { text: '[1] smith-v-henderson-brief.pdf, p.7', type: 'log' as const },
+  { text: '[2] henderson-strategy-memo.docx, p.3', type: 'log' as const },
+];
+
+const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
+---
+<Base
+  title="Cortex Knowledge — Self-hosted document Q&A | Hoelscher Automation"
+  description="A self-hosted document Q&A system for small professional services firms. Drop in your PDFs, ask in plain English, get answers with citations. Your data never leaves your firm."
+  path="/cortex/knowledge"
+>
+  <!-- Hero -->
+  <header class="bg-bg-deep">
+    <div class="max-w-container mx-auto px-8 pt-12 pb-20 md:pt-16 md:pb-28">
+      <div class="reveal max-w-3xl">
+        <div class="font-mono text-xs text-text-muted mb-4">
+          <a href="/cortex/knowledge" class="hover:text-text-secondary transition-colors duration-default">Cortex</a>
+          <span class="mx-1">/</span>
+          <span class="text-text-secondary">Knowledge</span>
+        </div>
+        <Badge variant="brand">Self-hosted · Privacy-first · Citation-required</Badge>
+        <h1 class="mt-6 font-display text-4xl md:text-5xl font-semibold leading-[1.1] tracking-tight text-text-primary">
+          Make 12 years of work product instantly findable.
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-text-secondary leading-relaxed max-w-2xl">
+          Cortex Knowledge is a self-hosted document Q&A system for small professional services firms. Drop in your PDFs, DOCXs, and notes. Ask questions in plain English. Every answer cites its source.
+        </p>
+        <div class="mt-10">
+          <Button variant="primary" href={cortexDemoUrl} target="_blank" rel="noopener">
+            Book a Cortex demo
+          </Button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- The problem -->
+  <section class="bg-bg border-y border-border-subtle">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal max-w-3xl">
+        <SectionLabel>The problem</SectionLabel>
+        <blockquote class="mt-6 font-display text-2xl md:text-3xl text-text-primary leading-snug border-l-2 border-brand-orange-bright pl-6">
+          "We have 12 years of work product nobody can find. The senior people remember where things are. The junior people give up and ask the seniors. We waste hours per day."
+        </blockquote>
+        <p class="mt-8 text-text-secondary leading-relaxed">
+          Generic search doesn't synthesize — you still have to open every result. ChatGPT can synthesize but can't be trusted with client data and won't cite sources. Both fail this use case for the same reason: small professional services firms need both <em class="text-text-primary not-italic font-medium">precision</em> and <em class="text-text-primary not-italic font-medium">privacy</em>, and neither alone is enough.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Terminal demo -->
+  <section class="bg-bg-deep">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal">
+        <SectionLabel>How a query works</SectionLabel>
+        <h2 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary mb-10">
+          Watch a real query in action.
+        </h2>
+      </div>
+      <div class="reveal">
+        <Terminal title="cortex — knowledge query" lines={terminalLines} />
+        <p class="mt-4 text-sm text-text-muted text-center max-w-2xl mx-auto">
+          Click any citation to open the source document at the cited passage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works (architecture) -->
+  <section class="bg-bg border-y border-border-subtle">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal max-w-2xl">
+        <SectionLabel>Architecture</SectionLabel>
+        <h2 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary">
+          Three steps, end to end.
+        </h2>
+      </div>
+      <div class="mt-12 grid md:grid-cols-3 gap-8">
+        <div class="reveal">
+          <div class="font-mono text-3xl text-brand-orange-bright mb-3">01</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-2">Drop files in</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">PDF, DOCX, TXT, Markdown. Watched folder or web upload. Auto-indexed.</p>
+        </div>
+        <div class="reveal">
+          <div class="font-mono text-3xl text-brand-orange-bright mb-3">02</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-2">Ask in plain English</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">RAG-powered retrieval against your vectorized library. Local embeddings by default.</p>
+        </div>
+        <div class="reveal">
+          <div class="font-mono text-3xl text-brand-orange-bright mb-3">03</div>
+          <h3 class="font-display text-lg font-semibold text-text-primary mb-2">Get cited answers</h3>
+          <p class="text-sm text-text-secondary leading-relaxed">Every claim links to source doc and page. Click through to verify.</p>
+        </div>
+      </div>
+      <p class="reveal mt-12 text-sm text-text-muted max-w-3xl">
+        Runs in Docker on your hardware. Postgres + Qdrant. Three LLM modes: bring your own Anthropic API key, run on local Ollama, or use our proxy.
+      </p>
+    </div>
+  </section>
+
+  <!-- Comparison table -->
+  <section class="bg-bg-deep">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal max-w-2xl">
+        <SectionLabel>Why this way</SectionLabel>
+        <h2 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary">
+          Self-hosted is the differentiator.
+        </h2>
+      </div>
+      <div class="reveal mt-10 overflow-x-auto">
+        <table class="w-full text-sm border border-border-default rounded-lg overflow-hidden">
+          <thead class="bg-bg-elevated">
+            <tr>
+              <th class="text-left p-4 font-mono text-xs uppercase tracking-wider text-text-muted"></th>
+              <th class="text-left p-4 font-semibold text-brand-orange-bright">Cortex Knowledge</th>
+              <th class="text-left p-4 font-medium text-text-secondary">ChatGPT / Claude</th>
+              <th class="text-left p-4 font-medium text-text-secondary">Microsoft Copilot</th>
+              <th class="text-left p-4 font-medium text-text-secondary">Glean / Hebbia</th>
+            </tr>
+          </thead>
+          <tbody class="text-text-secondary">
+            <tr class="border-t border-border-subtle">
+              <td class="p-4 font-medium text-text-primary">Where your data lives</td>
+              <td class="p-4 text-brand-orange-bright">Your infrastructure</td>
+              <td class="p-4">Vendor's</td>
+              <td class="p-4">Vendor's</td>
+              <td class="p-4">Vendor's</td>
+            </tr>
+            <tr class="border-t border-border-subtle">
+              <td class="p-4 font-medium text-text-primary">Per-seat cost</td>
+              <td class="p-4 text-brand-orange-bright">None</td>
+              <td class="p-4">$20/user/mo</td>
+              <td class="p-4">$30/user/mo</td>
+              <td class="p-4">$50K–$200K/yr</td>
+            </tr>
+            <tr class="border-t border-border-subtle">
+              <td class="p-4 font-medium text-text-primary">Right-sized for 5–30 person firms</td>
+              <td class="p-4 text-brand-orange-bright">Yes</td>
+              <td class="p-4">N/A</td>
+              <td class="p-4">Bloated</td>
+              <td class="p-4">Enterprise only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- v1 features -->
+  <section class="bg-bg border-y border-border-subtle">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal max-w-2xl">
+        <SectionLabel>v1 features</SectionLabel>
+        <h2 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary">
+          What ships in the first release.
+        </h2>
+      </div>
+      <ul class="reveal mt-10 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-4xl">
+        {v1Features.map((feature) => (
+          <li class="flex items-start gap-3 text-text-secondary">
+            <span class="flex-none mt-1.5 w-1.5 h-1.5 rounded-full bg-brand-orange-bright"></span>
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="bg-bg-deep">
+    <div class="max-w-container mx-auto px-8 py-20">
+      <div class="reveal max-w-2xl">
+        <SectionLabel>Pricing</SectionLabel>
+        <h2 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary">
+          Flat install fee plus optional managed support.
+        </h2>
+        <p class="mt-6 text-text-secondary leading-relaxed">
+          Concrete numbers vary by firm size and LLM mode. Contact for a quote during your demo.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="bg-bg border-t border-border-subtle">
+    <div class="max-w-container mx-auto px-8 py-20 text-center">
+      <h2 class="reveal font-display text-3xl md:text-4xl font-semibold text-text-primary">
+        Ready to see it on your documents?
+      </h2>
+      <p class="reveal mt-4 text-text-secondary max-w-xl mx-auto">
+        Book a 30-minute demo. I'll show you the system running against a sample legal/accounting corpus, then we'll talk about what installation looks like for your firm.
+      </p>
+      <div class="reveal mt-8">
+        <Button variant="primary" href={cortexDemoUrl} target="_blank" rel="noopener">
+          Book a Cortex demo
+        </Button>
+      </div>
+    </div>
+  </section>
+</Base>
