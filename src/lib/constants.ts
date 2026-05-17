@@ -10,10 +10,11 @@ export const GITHUB_URL = 'https://github.com/HoelscherAutomation';
 
 // Contact-form backend: a Cloudflare Worker that validates JSON
 // submissions and sends them via Resend. Source + deployment guide at
-// workers/contact-form/. To migrate to a custom subdomain like
-// contact-api.hoelscherautomation.com, configure the Worker's custom
-// domain in the Cloudflare dashboard and update this URL.
-export const CONTACT_ENDPOINT = 'https://hoelscher-contact-form.hoelscher-jordan.workers.dev';
+// workers/contact-form/. Served at api.hoelscherautomation.com/contact
+// via a Cloudflare Custom Domain binding on the Worker; the path
+// segment reserves room for future Workers under the same api.* host
+// (e.g. /cortex/demo, /scheduler/hooks) without re-architecting.
+export const CONTACT_ENDPOINT = 'https://api.hoelscherautomation.com/contact';
 
 // Cloudflare Web Analytics beacon token. To enable analytics:
 //   1. Sign in to dash.cloudflare.com → Analytics → Web Analytics
