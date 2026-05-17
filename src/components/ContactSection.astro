@@ -1,7 +1,7 @@
 ---
 import SectionLabel from './SectionLabel.astro';
 import BookCallButton from './BookCallButton.astro';
-import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
+import { CONTACT_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
 ---
 <section id="contact" class="bg-bg-deep">
   <div class="max-w-container mx-auto px-8 py-24">
@@ -35,7 +35,7 @@ import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
         <p class="text-text-secondary leading-relaxed mb-6">
           Not ready for a call? Drop a note and I'll reply within one business day.
         </p>
-        <form id="contact-form" action={FORMSPREE_ENDPOINT} method="POST" class="space-y-4">
+        <form id="contact-form" action={CONTACT_ENDPOINT} method="POST" class="space-y-4">
           <div>
             <label for="name" class="block text-sm text-text-secondary mb-1">Name</label>
             <input
@@ -85,10 +85,20 @@ import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
     status.className = 'text-sm hidden';
 
     try {
+      const formData = new FormData(form);
+      const payload = {
+        name: String(formData.get('name') ?? ''),
+        email: String(formData.get('email') ?? ''),
+        message: String(formData.get('message') ?? ''),
+      };
+
       const res = await fetch(form.action, {
         method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' },
+        body: JSON.stringify(payload),
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       });
 
       if (res.ok) {
@@ -96,10 +106,14 @@ import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
         status.className = 'text-sm text-ok';
         form.reset();
       } else {
-        const data = await res.json().catch(() => ({}));
-        status.textContent = (data as { errors?: { message: string }[] }).errors
-          ? (data as { errors: { message: string }[] }).errors.map((er) => er.message).join(', ')
-          : 'Something went wrong. Try emailing me directly.';
+        const data = (await res.json().catch(() => ({}))) as {
+          error?: string;
+          errors?: { message: string }[];
+        };
+        status.textContent =
+          data.error
+            ?? (data.errors ? data.errors.map((er) => er.message).join(', ') : null)
+            ?? 'Something went wrong. Try emailing me directly.';
         status.className = 'text-sm text-err';
       }
     } catch {

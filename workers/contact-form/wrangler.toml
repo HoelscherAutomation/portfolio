@@ -1,0 +1,15 @@
+name = "hoelscher-contact-form"
+main = "index.js"
+compatibility_date = "2026-05-16"
+
+# Set these secrets via:
+#   npx wrangler secret put RESEND_API_KEY
+#
+# Or define them in the Cloudflare dashboard under
+# Workers & Pages > hoelscher-contact-form > Settings > Variables and Secrets.
+
+[vars]
+ALLOWED_ORIGIN = "https://hoelscherautomation.com"
+# FROM_EMAIL and TO_EMAIL are set in the dashboard so they can be
+# updated without touching code (e.g. when domain verification finishes
+# and FROM_EMAIL changes from onboarding@resend.dev to your domain).
