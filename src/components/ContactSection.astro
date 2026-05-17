@@ -19,7 +19,7 @@ import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
           Book a 30-minute discovery call
         </h3>
         <p class="text-text-secondary leading-relaxed mb-6">
-          Come prepared to describe a workflow you'd like to fix. I'll come prepared with questions. No pitch deck — just a conversation.
+          Come prepared to describe a workflow you'd like to fix. I'll come prepared with questions. No pitch deck. Just a conversation.
         </p>
         <BookCallButton />
         <p class="mt-6 text-sm text-text-muted">
@@ -92,7 +92,7 @@ import { FORMSPREE_ENDPOINT, CONSULTING_EMAIL } from '../lib/constants';
       });
 
       if (res.ok) {
-        status.textContent = "Thanks — I'll be in touch within 24 hours.";
+        status.textContent = "Thanks. I'll be in touch within 24 hours.";
         status.className = 'text-sm text-ok';
         form.reset();
       } else {

@@ -7,12 +7,12 @@ import Terminal from '../../components/Terminal.astro';
 import { BOOKING_URL } from '../../lib/constants';
 
 const v1Features = [
-  'Document ingestion — PDF, DOCX, TXT, Markdown',
-  'Auto-indexing — new, changed, and removed files reflected automatically',
+  'Document ingestion: PDF, DOCX, TXT, Markdown',
+  'Auto-indexing: new, changed, and removed files reflected automatically',
   'Citation-required answers with click-through to source passages',
   'Local user accounts (admin + members)',
-  'Three LLM modes — bring your own Anthropic API key, run on local Ollama, or use our proxy',
-  'Admin dashboard — doc count, index status, users, query log, usage stats',
+  'Three LLM modes: bring your own Anthropic API key, run on local Ollama, or use our proxy',
+  'Admin dashboard: doc count, index status, users, query log, usage stats',
   'In-app updates from container registry',
   'Single-command backup and restore',
 ];
@@ -35,8 +35,8 @@ const terminalLines = [
 const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
 ---
 <Base
-  title="Cortex Knowledge — Self-hosted document Q&A | Hoelscher Automation"
-  description="A self-hosted document Q&A system for small professional services firms. Drop in your PDFs, ask in plain English, get answers with citations. Your data never leaves your firm."
+  title="Cortex Knowledge | Self-hosted document Q&A | Hoelscher Automation"
+  description="A self-hosted document Q&A system for small professional services firms. Drop in your PDFs, ask in plain English, get answers with citations. Your documents stay on your infrastructure."
   path="/cortex/knowledge"
 >
   <!-- Hero -->
@@ -73,7 +73,7 @@ const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
           "We have 12 years of work product nobody can find. The senior people remember where things are. The junior people give up and ask the seniors. We waste hours per day."
         </blockquote>
         <p class="mt-8 text-text-secondary leading-relaxed">
-          Generic search doesn't synthesize — you still have to open every result. ChatGPT can synthesize but can't be trusted with client data and won't cite sources. Both fail this use case for the same reason: small professional services firms need both <em class="text-text-primary not-italic font-medium">precision</em> and <em class="text-text-primary not-italic font-medium">privacy</em>, and neither alone is enough.
+          Generic search doesn't synthesize, so you still have to open every result. ChatGPT can synthesize but can't be trusted with client data and won't cite sources. Both fail this use case for the same reason: small professional services firms need both <em class="text-text-primary not-italic font-medium">precision</em> and <em class="text-text-primary not-italic font-medium">privacy</em>, and neither alone is enough.
         </p>
       </div>
     </div>
@@ -131,7 +131,7 @@ const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
           For answer synthesis, you choose the LLM mode at install: <strong class="text-text-primary">Local Ollama</strong> keeps everything on your hardware. <strong class="text-text-primary">BYO Anthropic API key</strong> sends only the cited chunks to Anthropic under your own contract. <strong class="text-text-primary">Our proxy</strong> routes through our infrastructure to Anthropic with per-token billing.
         </p>
         <p class="text-text-muted">
-          Your full document corpus never leaves your firm regardless of mode — retrieval sends only the relevant 5–10 chunks per query.
+          Your full document corpus never leaves your firm regardless of mode. Retrieval sends only the relevant 5–10 chunks per query.
         </p>
       </div>
     </div>

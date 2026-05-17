@@ -67,7 +67,7 @@ const ogImageUrl = new URL(ogImage, SITE_URL).toString();
   <Footer />
 
   <script>
-    // Scroll reveal — IntersectionObserver activates .reveal elements
+    // Scroll reveal: activates .reveal elements when they enter the viewport
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
