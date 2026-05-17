@@ -81,7 +81,21 @@ const effectiveDate = '2026-05-16';
 
       <section>
         <h2 class="font-display text-xl font-semibold text-text-primary mb-3">6. Cortex Knowledge</h2>
-        <p>This Privacy Policy covers <strong>hoelscherautomation.com</strong>. Cortex Knowledge is a self-hosted software product that runs entirely on customer infrastructure. {COMPANY_LEGAL_NAME} does not have access to customer documents, queries, or any data processed by a Cortex Knowledge installation, unless a customer explicitly provides such data during a support engagement.</p>
+        <p>This Privacy Policy covers <strong>hoelscherautomation.com</strong>. Cortex Knowledge is a separate self-hosted software product with its own data handling characteristics, summarized here for transparency. The product is governed by its own license and installation documentation; the summary below should not be relied upon as the complete description.</p>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">What runs on your infrastructure</h3>
+        <p>The Cortex Knowledge application, your uploaded documents, and the search index built from them all run on your hardware. {COMPANY_LEGAL_NAME} does not have access to these artifacts. Embeddings used for retrieval are generated locally and never transmitted.</p>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">What happens at query time depends on the LLM mode you choose</h3>
+        <p>To synthesize a cited answer from retrieved document chunks, Cortex Knowledge sends those chunks plus your query to a large language model. The product supports three LLM configurations, selected by you at install:</p>
+        <ul class="mt-3 space-y-2 list-disc pl-6">
+          <li><strong>Local (Ollama)</strong> — your query and the retrieved chunks are processed entirely on your hardware. No content leaves your firm.</li>
+          <li><strong>BYO API key</strong> — your query and the retrieved chunks are sent directly to the LLM provider (currently Anthropic) under your own account and contract. {COMPANY_LEGAL_NAME} has no involvement and no access.</li>
+          <li><strong>Hoelscher proxy</strong> — your query and the retrieved chunks transit our proxy infrastructure to the underlying LLM provider. We do not persist query content, document chunks, or generated answers, but they pass through our systems in transit, and we retain billing-related metadata (token counts, timestamps, and the originating installation ID).</li>
+        </ul>
+
+        <h3 class="font-medium text-text-primary mt-4 mb-2">Scope of data sent at query time</h3>
+        <p>In all three modes, only the chunks selected by retrieval for a given query are transmitted (typically 5–10 chunks per query) — never your full document corpus. Your documents, indexes, and prior query history remain on your infrastructure.</p>
       </section>
 
       <section>

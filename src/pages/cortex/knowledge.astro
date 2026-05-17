@@ -123,9 +123,17 @@ const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
           <p class="text-sm text-text-secondary leading-relaxed">Every claim links to source doc and page. Click through to verify.</p>
         </div>
       </div>
-      <p class="reveal mt-12 text-sm text-text-muted max-w-3xl">
-        Runs in Docker on your hardware. Postgres + Qdrant. Three LLM modes: bring your own Anthropic API key, run on local Ollama, or use our proxy.
-      </p>
+      <div class="reveal mt-12 max-w-3xl space-y-4 text-sm text-text-secondary leading-relaxed">
+        <p>
+          Runs in Docker on your hardware. Postgres + Qdrant for storage; embeddings generated locally via Ollama.
+        </p>
+        <p>
+          For answer synthesis, you choose the LLM mode at install: <strong class="text-text-primary">Local Ollama</strong> keeps everything on your hardware. <strong class="text-text-primary">BYO Anthropic API key</strong> sends only the cited chunks to Anthropic under your own contract. <strong class="text-text-primary">Our proxy</strong> routes through our infrastructure to Anthropic with per-token billing.
+        </p>
+        <p class="text-text-muted">
+          Your full document corpus never leaves your firm regardless of mode — retrieval sends only the relevant 5–10 chunks per query.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -151,11 +159,18 @@ const cortexDemoUrl = `${BOOKING_URL}?source=cortex-page`;
           </thead>
           <tbody class="text-text-secondary">
             <tr class="border-t border-border-subtle">
-              <td class="p-4 font-medium text-text-primary">Where your data lives</td>
+              <td class="p-4 font-medium text-text-primary">Where documents are stored</td>
               <td class="p-4 text-brand-orange-bright">Your infrastructure</td>
-              <td class="p-4">Vendor's</td>
-              <td class="p-4">Vendor's</td>
-              <td class="p-4">Vendor's</td>
+              <td class="p-4">Vendor</td>
+              <td class="p-4">Vendor</td>
+              <td class="p-4">Vendor</td>
+            </tr>
+            <tr class="border-t border-border-subtle">
+              <td class="p-4 font-medium text-text-primary">Who controls the LLM</td>
+              <td class="p-4 text-brand-orange-bright">You (local or BYO)</td>
+              <td class="p-4">Vendor</td>
+              <td class="p-4">Vendor</td>
+              <td class="p-4">Vendor</td>
             </tr>
             <tr class="border-t border-border-subtle">
               <td class="p-4 font-medium text-text-primary">Per-seat cost</td>
