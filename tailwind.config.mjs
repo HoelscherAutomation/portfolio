@@ -13,7 +13,7 @@ export default {
         'border-hover': 'rgba(255,255,255,0.18)',
         'text-primary': '#E8EBF2',
         'text-secondary': '#A0AABB',
-        'text-muted': '#6B7587',
+        'text-muted': '#7C8497',
         'brand-orange': '#E58E26',
         'brand-orange-bright': '#F0A653',
         'brand-blue': '#4D8DF5',
