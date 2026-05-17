@@ -38,14 +38,32 @@ const ogImageUrl = new URL(ogImage, SITE_URL).toString();
   <!-- Favicon (added in Task 22) -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 
-  <!-- Fonts -->
+  <!-- Fonts: preload + async-load to avoid render-blocking the initial paint -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+    media="print"
+    onload="this.media='all'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+    />
+  </noscript>
 </head>
 <body>
   <Nav />
-  <slot />
+  <main id="content">
+    <slot />
+  </main>
   <Footer />
 
   <script>
