@@ -8,11 +8,12 @@ export const BOOKING_URL = 'https://calendar.app.google/vBKoPc1KpCooomgc6';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/jordanhoelscher/';
 export const GITHUB_URL = 'https://github.com/HoelscherAutomation';
 
-// Contact-form backend. Send POST with JSON {name, email, message}.
-// Currently points at the legacy Formspree form; replace with the
-// deployed Cloudflare Worker URL once the Resend pipeline is verified.
-// See workers/contact-form/README.md for deployment steps.
-export const CONTACT_ENDPOINT = 'https://formspree.io/f/mrezorre';
+// Contact-form backend: a Cloudflare Worker that validates JSON
+// submissions and sends them via Resend. Source + deployment guide at
+// workers/contact-form/. To migrate to a custom subdomain like
+// contact-api.hoelscherautomation.com, configure the Worker's custom
+// domain in the Cloudflare dashboard and update this URL.
+export const CONTACT_ENDPOINT = 'https://hoelscher-contact-form.hoelscher-jordan.workers.dev';
 
 // Cloudflare Web Analytics beacon token. To enable analytics:
 //   1. Sign in to dash.cloudflare.com → Analytics → Web Analytics
