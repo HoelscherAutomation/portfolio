@@ -88,7 +88,7 @@ function start(container: HTMLElement): void {
 
   let smooth = scrollY + innerHeight / 2;
   let raf = 0;
-  const clock = new THREE.Clock();
+  const t0 = performance.now();
 
   const frame = (): void => {
     raf = requestAnimationFrame(frame);
@@ -102,7 +102,7 @@ function start(container: HTMLElement): void {
     }
     geometry.attributes.position.needsUpdate = true;
     material.color.copy(colFrom).lerp(colTo, p.t);
-    const t = clock.getElapsedTime();
+    const t = (performance.now() - t0) / 1000;
     if (reduceMotion.matches) {
       points.rotation.y = p.t * 0.35;
       points.rotation.x = 0;

@@ -47,9 +47,9 @@ export function makeFormation(
   } else {
     // network: points on two spherical shells (every 7th point on the outer one)
     for (let i = 0; i < count; i++) {
-      let x = rand() * 2 - 1;
-      let y = rand() * 2 - 1;
-      let z = rand() * 2 - 1;
+      const x = rand() * 2 - 1;
+      const y = rand() * 2 - 1;
+      const z = rand() * 2 - 1;
       const len = Math.hypot(x, y, z) || 1;
       const r = i % 7 === 0 ? 3.3 : 2.6;
       a[i * 3] = (x / len) * r;
