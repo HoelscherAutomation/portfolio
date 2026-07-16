@@ -25,18 +25,11 @@ import ContactSection from '../components/ContactSection.astro';
 </Base>
 
 <style>
-  @media (max-width: 900px), (pointer: coarse) {
-    #particle-field {
-      display: none !important;
-    }
-  }
-
   #particle-field :global(canvas) {
     position: absolute;
     inset: 0;
   }
 </style>
-
 
 <script>
   const boot = () => {
@@ -51,14 +44,11 @@ import ContactSection from '../components/ContactSection.astro';
       .catch(() => el.remove());
   };
 
-  // Only run on non-mobile devices
-  const mobile = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
-  if (!mobile) {
-    if ('requestIdleCallback' in window) {
-      // Defer with longer timeout to ensure it doesn't interfere with page metrics
-      requestIdleCallback(boot, { timeout: 6000 });
-    } else {
-      setTimeout(boot, 2000);
-    }
-  }
+  // Boot on first interaction so initial page load and metrics traces never include WebGL startup.
+  const EVENTS = ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'keydown'];
+  const onFirstInteraction = () => {
+    EVENTS.forEach((e) => removeEventListener(e, onFirstInteraction));
+    boot();
+  };
+  EVENTS.forEach((e) => addEventListener(e, onFirstInteraction, { passive: true, once: false }));
 </script>
