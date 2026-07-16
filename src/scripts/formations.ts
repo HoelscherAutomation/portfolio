@@ -72,7 +72,12 @@ export function progressAt(scrollCenter: number, points: TimelinePoint[]): Progr
   }
   let i = 0;
   while (points[i + 1].anchor < scrollCenter) i++;
-  const seg = (scrollCenter - points[i].anchor) / (points[i + 1].anchor - points[i].anchor);
+  const span = points[i + 1].anchor - points[i].anchor;
+  // Zero-height or stacked sections can share an anchor. Treat a
+  // non-positive span as an instantly-complete segment instead of dividing
+  // by (near-)zero, which would otherwise produce NaN and corrupt every
+  // downstream particle position.
+  const seg = span <= 0 ? 1 : (scrollCenter - points[i].anchor) / span;
   return {
     from: points[i].formation,
     to: points[i + 1].formation,

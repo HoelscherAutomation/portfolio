@@ -121,22 +121,33 @@ function start(container: HTMLElement): void {
     raf = 0;
   };
 
-  document.addEventListener('visibilitychange', () => {
+  const onVisibilityChange = (): void => {
     if (document.hidden) stopLoop();
     else startLoop();
-  });
+  };
 
-  addEventListener('resize', () => {
+  const onResize = (): void => {
     renderer.setSize(innerWidth, innerHeight);
     camera.aspect = innerWidth / innerHeight;
     camera.updateProjectionMatrix();
     measure();
-  });
+  };
 
-  renderer.domElement.addEventListener('webglcontextlost', () => {
+  const teardown = (): void => {
     stopLoop();
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    removeEventListener('resize', onResize);
+    renderer.dispose();
     container.remove();
-  });
+  };
+
+  const onContextLost = (): void => {
+    teardown();
+  };
+
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  addEventListener('resize', onResize);
+  renderer.domElement.addEventListener('webglcontextlost', onContextLost);
 
   startLoop();
 }

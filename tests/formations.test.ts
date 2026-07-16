@@ -70,4 +70,50 @@ describe('progressAt', () => {
   it('throws on an empty timeline', () => {
     expect(() => progressAt(0, [])).toThrow();
   });
+
+  it('treats a zero-height segment (duplicate anchors) as instantly complete, never NaN', () => {
+    // grid and lattice share anchor 1000 (a zero-height or stacked section).
+    // The scan walks i forward while points[i+1].anchor < scrollCenter, so it
+    // always lands on a segment where points[i].anchor < scrollCenter <=
+    // points[i+1].anchor -- which structurally skips straight over the
+    // zero-span (grid, lattice) pair rather than selecting it. Both sides of
+    // the shared anchor must still resolve to finite, sane progress.
+    const stacked: TimelinePoint[] = [
+      { anchor: 0, formation: 'scattered' },
+      { anchor: 1000, formation: 'grid' },
+      { anchor: 1000, formation: 'lattice' },
+      { anchor: 2000, formation: 'network' },
+    ];
+
+    const at = progressAt(1000, stacked);
+    expect(Number.isFinite(at.mix)).toBe(true);
+    expect(Number.isFinite(at.t)).toBe(true);
+    expect(at.from).toBe('scattered');
+    expect(at.to).toBe('grid');
+    expect(at.mix).toBe(1);
+
+    const justPast = progressAt(1000.001, stacked);
+    expect(Number.isFinite(justPast.mix)).toBe(true);
+    expect(Number.isFinite(justPast.t)).toBe(true);
+    expect(justPast.from).toBe('lattice');
+    expect(justPast.to).toBe('network');
+  });
+
+  it('never divides by a zero-width segment even at the shared anchor boundary', () => {
+    // Direct regression for the (scrollCenter - a) / (b - a) division: with a
+    // three-way stack (two consecutive zero-span segments), every scan point
+    // across the whole range must stay finite.
+    const stacked: TimelinePoint[] = [
+      { anchor: 0, formation: 'scattered' },
+      { anchor: 500, formation: 'grid' },
+      { anchor: 500, formation: 'lattice' },
+      { anchor: 500, formation: 'network' },
+      { anchor: 1000, formation: 'grid' },
+    ];
+    for (let s = -100; s <= 1100; s += 25) {
+      const p = progressAt(s, stacked);
+      expect(Number.isFinite(p.mix)).toBe(true);
+      expect(Number.isFinite(p.t)).toBe(true);
+    }
+  });
 });
