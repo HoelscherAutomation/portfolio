@@ -11,9 +11,41 @@ import ContactSection from '../components/ContactSection.astro';
   description="Self-hosted AI products and custom automation for small professional services firms."
   path="/"
 >
+  <div id="particle-field" aria-hidden="true" class="pointer-events-none fixed inset-0 -z-10">
+    <div
+      class="absolute inset-0 z-10"
+      style="background: radial-gradient(ellipse at center, rgba(10,14,26,0) 40%, rgba(10,14,26,0.75) 100%);"
+    ></div>
+  </div>
   <Hero />
   <CortexOverviewSection />
   <ConsultingSection />
   <AboutSection />
   <ContactSection />
 </Base>
+
+<style>
+  #particle-field :global(canvas) {
+    position: absolute;
+    inset: 0;
+  }
+</style>
+
+<script>
+  const boot = () => {
+    const el = document.getElementById('particle-field');
+    if (!el) return;
+    if (!('WebGLRenderingContext' in window)) {
+      el.remove();
+      return;
+    }
+    import('../scripts/particle-field')
+      .then(({ initParticleField }) => initParticleField(el))
+      .catch(() => el.remove());
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(boot, { timeout: 3000 });
+  } else {
+    setTimeout(boot, 800);
+  }
+</script>
