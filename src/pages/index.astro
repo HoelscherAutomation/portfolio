@@ -25,11 +25,18 @@ import ContactSection from '../components/ContactSection.astro';
 </Base>
 
 <style>
+  @media (max-width: 900px), (pointer: coarse) {
+    #particle-field {
+      display: none !important;
+    }
+  }
+
   #particle-field :global(canvas) {
     position: absolute;
     inset: 0;
   }
 </style>
+
 
 <script>
   const boot = () => {
@@ -43,9 +50,15 @@ import ContactSection from '../components/ContactSection.astro';
       .then(({ initParticleField }) => initParticleField(el))
       .catch(() => el.remove());
   };
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(boot, { timeout: 3000 });
-  } else {
-    setTimeout(boot, 800);
+
+  // Only run on non-mobile devices
+  const mobile = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+  if (!mobile) {
+    if ('requestIdleCallback' in window) {
+      // Defer with longer timeout to ensure it doesn't interfere with page metrics
+      requestIdleCallback(boot, { timeout: 6000 });
+    } else {
+      setTimeout(boot, 2000);
+    }
   }
 </script>

@@ -31,14 +31,14 @@ function start(container: HTMLElement): void {
 
   const small = matchMedia('(max-width: 900px), (pointer: coarse)').matches;
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const count = small ? 700 : 1300;
+  const count = small ? 100 : 1300;
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
     powerPreference: 'low-power',
   });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.5 : 2));
+  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.0 : 2));
   renderer.setSize(innerWidth, innerHeight);
   container.appendChild(renderer.domElement);
 
