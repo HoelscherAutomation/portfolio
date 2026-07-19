@@ -74,7 +74,8 @@ full builds that get offloaded):
 - Re-encode both to 720p H.264 + AAC, `-movflags +faststart`, target ≤7MB each.
 - Extract one poster frame per video as JPEG (a visually strong scene frame, not frame 0).
 - Output: `public/videos/demo-es.mp4`, `public/videos/demo-uz.mp4`,
-  `public/images/video-poster-es.jpg`, `public/images/video-poster-uz.jpg`.
+  `public/videos/poster-es.jpg`, `public/videos/poster-uz.jpg` (all demo assets together
+  in one directory).
 
 ### 5. Nav
 
