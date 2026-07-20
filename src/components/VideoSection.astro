@@ -1,0 +1,112 @@
+---
+import SectionLabel from './SectionLabel.astro';
+
+const useCases = [
+  {
+    num: '01',
+    title: 'Libraries & Nonprofits',
+    body: 'Bilingual read-along and educational story videos that bring your programs to families in their own language.',
+  },
+  {
+    num: '02',
+    title: 'Businesses',
+    body: 'Explainer and promo videos that show what you do without a film crew or a studio budget.',
+  },
+  {
+    num: '03',
+    title: 'Families',
+    body: 'Personalized story videos for birthdays and special occasions, starring the people who matter.',
+  },
+];
+---
+<section id="video" class="bg-bg/85 border-y border-border-subtle" data-scene="grid">
+  <div class="max-w-container mx-auto px-8 py-24">
+    <div class="reveal max-w-2xl">
+      <SectionLabel>Video Production</SectionLabel>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl font-semibold text-text-primary">
+        Story videos, produced with AI.
+      </h2>
+      <p class="mt-6 text-lg text-text-secondary leading-relaxed">
+        Narrated, animated video in any language, produced end to end with an AI pipeline we built and run ourselves. From bilingual read-alongs for libraries to explainers for businesses to personalized stories for families.
+      </p>
+    </div>
+
+    <div class="reveal mt-12 max-w-3xl">
+      <div class="flex gap-2 mb-4" role="group" aria-label="Demo language">
+        <button
+          type="button"
+          class="demo-lang px-4 py-1.5 text-sm font-medium rounded border transition-colors duration-default border-brand-orange-bright text-brand-orange-bright"
+          data-src="/videos/demo-es.mp4"
+          data-poster="/videos/poster-es.jpg"
+          aria-pressed="true"
+        >
+          Español
+        </button>
+        <button
+          type="button"
+          class="demo-lang px-4 py-1.5 text-sm font-medium rounded border transition-colors duration-default border-border-subtle text-text-secondary hover:text-text-primary"
+          data-src="/videos/demo-uz.mp4"
+          data-poster="/videos/poster-uz.jpg"
+          aria-pressed="false"
+        >
+          Oʻzbekcha
+        </button>
+      </div>
+
+      <video
+        id="demo-player"
+        class="w-full rounded-lg border border-border-subtle"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/poster-es.jpg"
+        src="/videos/demo-es.mp4"
+        aria-label="Demo video: The Lion and the Mouse, AI narrated story"
+      ></video>
+
+      <p class="mt-3 text-sm text-text-muted">
+        Aesop's "The Lion and the Mouse". Original illustrations, AI narration and animation, produced in Spanish and Uzbek from the same pipeline.
+      </p>
+    </div>
+
+    <div class="reveal mt-20">
+      <SectionLabel>Where it fits</SectionLabel>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        {useCases.map((uc) => (
+          <div>
+            <div class="font-mono text-2xl text-brand-orange-bright mb-2">{uc.num}</div>
+            <h3 class="font-display text-lg font-semibold text-text-primary mb-1">{uc.title}</h3>
+            <p class="text-sm text-text-secondary leading-relaxed">{uc.body}</p>
+            <a href="#contact" class="block mt-3 text-xs font-medium text-brand-orange-bright hover:text-brand-orange transition-colors duration-default">
+              Discuss this →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const player = document.getElementById('demo-player') as HTMLVideoElement | null;
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('.demo-lang'));
+
+  const ACTIVE = ['border-brand-orange-bright', 'text-brand-orange-bright'];
+  const INACTIVE = ['border-border-subtle', 'text-text-secondary', 'hover:text-text-primary'];
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      if (!player || tab.getAttribute('aria-pressed') === 'true') return;
+      player.pause();
+      player.src = tab.dataset.src ?? '';
+      player.poster = tab.dataset.poster ?? '';
+      player.load();
+      tabs.forEach((t) => {
+        const active = t === tab;
+        t.setAttribute('aria-pressed', String(active));
+        t.classList.remove(...(active ? INACTIVE : ACTIVE));
+        t.classList.add(...(active ? ACTIVE : INACTIVE));
+      });
+    });
+  });
+</script>
