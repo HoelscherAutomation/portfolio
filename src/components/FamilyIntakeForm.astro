@@ -1,0 +1,148 @@
+---
+import { CONTACT_ENDPOINT } from '../lib/constants';
+
+const themes = [
+  'Dragons & castles',
+  'Space adventure',
+  'Under the sea',
+  'Enchanted forest',
+  'Superhero',
+  'Something else (tell us below)',
+];
+
+const inputClass =
+  'w-full px-3 py-2.5 bg-bg-elevated border border-border-default rounded text-text-primary placeholder-text-muted focus:outline-none focus:border-brand-orange transition-colors duration-default';
+---
+<div class="mt-10">
+  <h4 class="font-display text-xl font-semibold text-text-primary mb-2">
+    Start your kid's adventure
+  </h4>
+  <p class="text-text-secondary leading-relaxed mb-6">
+    Tell us a little about your kid and the story you want. We reply within a day.
+  </p>
+
+  <form id="family-form" action={CONTACT_ENDPOINT} method="POST" class="space-y-4 max-w-xl">
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label for="fam-name" class="block text-sm text-text-secondary mb-1">Your name</label>
+        <input type="text" id="fam-name" name="name" required maxlength="200" class={inputClass} />
+      </div>
+      <div>
+        <label for="fam-email" class="block text-sm text-text-secondary mb-1">Email</label>
+        <input type="email" id="fam-email" name="email" required maxlength="200" class={inputClass} />
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label for="fam-child" class="block text-sm text-text-secondary mb-1">Child's first name</label>
+        <input type="text" id="fam-child" name="childName" required maxlength="100" class={inputClass} />
+      </div>
+      <div>
+        <label for="fam-age" class="block text-sm text-text-secondary mb-1">Child's age</label>
+        <input type="number" id="fam-age" name="childAge" required min="1" max="17" class={inputClass} />
+      </div>
+    </div>
+
+    <div>
+      <label for="fam-theme" class="block text-sm text-text-secondary mb-1">Theme</label>
+      <select id="fam-theme" name="theme" required class={inputClass}>
+        {themes.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </div>
+
+    <div>
+      <label for="fam-color" class="block text-sm text-text-secondary mb-1">Favorite color (optional)</label>
+      <input type="text" id="fam-color" name="favoriteColor" maxlength="100" class={inputClass} />
+    </div>
+
+    <div>
+      <label for="fam-special" class="block text-sm text-text-secondary mb-1">
+        Anything special that should make an appearance? (optional)
+      </label>
+      <textarea id="fam-special" name="special" rows="2" maxlength="1000" class={`${inputClass} resize-y`}
+        placeholder="A pet, a best friend, a favorite toy"></textarea>
+    </div>
+
+    <fieldset>
+      <legend class="block text-sm text-text-secondary mb-2">Video length</legend>
+      <div class="space-y-2">
+        <label class="flex items-center gap-2 text-text-primary">
+          <input type="radio" name="length" value="About 1 minute ($99)" required checked class="accent-brand-orange" />
+          About 1 minute ($99)
+        </label>
+        <label class="flex items-center gap-2 text-text-primary">
+          <input type="radio" name="length" value="Longer (we will quote it)" class="accent-brand-orange" />
+          Longer (we will quote it)
+        </label>
+      </div>
+    </fieldset>
+
+    <div>
+      <label for="fam-notes" class="block text-sm text-text-secondary mb-1">Anything else we should know? (optional)</label>
+      <textarea id="fam-notes" name="notes" rows="3" maxlength="2000" class={`${inputClass} resize-y`}></textarea>
+    </div>
+
+    <button type="submit" id="family-submit"
+      class="w-full px-5 py-3 bg-brand-orange text-navy-deep font-semibold rounded hover:bg-brand-orange-bright transition-colors duration-default disabled:opacity-60 disabled:cursor-not-allowed">
+      Request my kid's film
+    </button>
+    <p class="text-xs text-text-muted">
+      After you submit, we will reply with instructions for sending your 10 to 15 photos.
+    </p>
+    <div id="family-form-status" class="text-sm hidden"></div>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('family-form') as HTMLFormElement | null;
+  const submit = document.getElementById('family-submit') as HTMLButtonElement | null;
+  const status = document.getElementById('family-form-status') as HTMLDivElement | null;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!submit || !status) return;
+
+    submit.disabled = true;
+    submit.textContent = 'Sending…';
+    status.className = 'text-sm hidden';
+
+    try {
+      const formData = new FormData(form);
+      const payload = {
+        type: 'family',
+        name: String(formData.get('name') ?? ''),
+        email: String(formData.get('email') ?? ''),
+        childName: String(formData.get('childName') ?? ''),
+        childAge: Number(formData.get('childAge') ?? 0),
+        theme: String(formData.get('theme') ?? ''),
+        favoriteColor: String(formData.get('favoriteColor') ?? ''),
+        special: String(formData.get('special') ?? ''),
+        length: String(formData.get('length') ?? ''),
+        notes: String(formData.get('notes') ?? ''),
+      };
+
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      });
+
+      if (res.ok) {
+        status.textContent = 'Got it. We will reply within a day with photo instructions and next steps.';
+        status.className = 'text-sm text-ok';
+        form.reset();
+      } else {
+        const data = (await res.json().catch(() => ({}))) as { error?: string };
+        status.textContent = data.error ?? 'Something went wrong. Try emailing us directly.';
+        status.className = 'text-sm text-err';
+      }
+    } catch {
+      status.textContent = 'Network error. Try emailing us directly.';
+      status.className = 'text-sm text-err';
+    } finally {
+      submit.disabled = false;
+      submit.textContent = "Request my kid's film";
+    }
+  });
+</script>
