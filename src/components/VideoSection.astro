@@ -18,6 +18,15 @@ const useCases = [
     body: 'Personalized story videos for birthdays and special occasions, starring the people who matter.',
   },
 ];
+
+const familyPhotos = [
+  { src: '/videos/family-photo-1.jpg', alt: 'Example photo: close up of a boy indoors by a window' },
+  { src: '/videos/family-photo-2.jpg', alt: 'Example photo: boy grinning in a kitchen' },
+  { src: '/videos/family-photo-3.jpg', alt: 'Example photo: full length shot of a boy in a backyard with a soccer ball' },
+  { src: '/videos/family-photo-4.jpg', alt: 'Example photo: boy reading on a couch in lamp light' },
+  { src: '/videos/family-photo-5.jpg', alt: 'Example photo: boy at a park on a cloudy day' },
+  { src: '/videos/family-photo-6.jpg', alt: 'Example photo: boy running outside, slightly blurry' },
+];
 ---
 <section id="video" class="bg-bg/85 border-y border-border-subtle" data-scene="grid">
   <div class="max-w-container mx-auto px-8 py-24">
@@ -32,6 +41,10 @@ const useCases = [
     </div>
 
     <div class="reveal mt-12 max-w-3xl">
+      <SectionLabel>For organizations</SectionLabel>
+      <p class="mt-3 mb-4 text-sm text-text-secondary">
+        Bilingual story videos for libraries, schools, and nonprofits.
+      </p>
       <div class="flex gap-2 mb-4" role="group" aria-label="Demo language">
         <button
           type="button"
@@ -66,6 +79,46 @@ const useCases = [
 
       <p class="mt-3 text-sm text-text-muted">
         Aesop's "The Lion and the Mouse". Original illustrations, AI narration and animation, produced in Spanish and Uzbek from the same pipeline.
+      </p>
+    </div>
+
+    <div class="reveal mt-20 max-w-3xl">
+      <SectionLabel>For families</SectionLabel>
+      <h3 class="mt-4 font-display text-2xl md:text-3xl font-semibold text-text-primary">
+        Six phone photos in. One adventure out.
+      </h3>
+      <p class="mt-4 text-text-secondary leading-relaxed">
+        Send us a handful of everyday photos and we make a short film where your kid is the hero. Photos like these are all it takes: different angles, different light, nothing fancy.
+      </p>
+
+      <div class="mt-6 grid grid-cols-3 sm:grid-cols-6 gap-2">
+        {familyPhotos.map((p) => (
+          <img
+            src={p.src}
+            alt={p.alt}
+            loading="lazy"
+            width="480"
+            height="640"
+            class="rounded border border-border-subtle aspect-[3/4] object-cover w-full"
+          />
+        ))}
+      </div>
+      <p class="mt-2 text-xs text-text-muted">
+        The boy in this demo is AI generated, so no real child appears here. Your family's photos are used only for your video.
+      </p>
+
+      <video
+        id="family-player"
+        class="mt-6 w-full rounded-lg border border-border-subtle"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/poster-family.jpg"
+        src="/videos/demo-family.mp4"
+        aria-label="Demo video: a boy's dragon adventure, generated from the six example photos above"
+      ></video>
+      <p class="mt-3 text-sm text-text-muted">
+        Every scene came from the six photos above. Original story, original world, produced end to end with our pipeline.
       </p>
     </div>
 
