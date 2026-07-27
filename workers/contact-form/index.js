@@ -31,6 +31,10 @@ export default {
       return json({ error: 'Invalid JSON body' }, 400, env);
     }
 
+    if (body.type === 'family') {
+      return handleFamily(body, env);
+    }
+
     const name = String(body.name ?? '').trim();
     const email = String(body.email ?? '').trim();
     const message = String(body.message ?? '').trim();
@@ -80,6 +84,86 @@ export default {
     return json({ ok: true }, 200, env);
   },
 };
+
+const FAMILY_THEMES = [
+  'Dragons & castles',
+  'Space adventure',
+  'Under the sea',
+  'Enchanted forest',
+  'Superhero',
+  'Something else (tell us below)',
+];
+const FAMILY_LENGTHS = ['About 1 minute ($99)', 'Longer (we will quote it)'];
+
+async function handleFamily(body, env) {
+  const name = String(body.name ?? '').trim();
+  const email = String(body.email ?? '').trim();
+  const childName = String(body.childName ?? '').trim();
+  const childAge = Number(body.childAge);
+  const theme = String(body.theme ?? '');
+  const length = String(body.length ?? '');
+  const favoriteColor = String(body.favoriteColor ?? '').trim();
+  const special = String(body.special ?? '').trim();
+  const notes = String(body.notes ?? '').trim();
+
+  if (!name || !email || !childName) {
+    return json({ error: 'Name, email, and your child\'s first name are required.' }, 400, env);
+  }
+  if (!Number.isInteger(childAge) || childAge < 1 || childAge > 17) {
+    return json({ error: 'Please provide your child\'s age (1-17).' }, 400, env);
+  }
+  if (!FAMILY_THEMES.includes(theme)) {
+    return json({ error: 'Please pick a theme from the list.' }, 400, env);
+  }
+  if (!FAMILY_LENGTHS.includes(length)) {
+    return json({ error: 'Please pick a video length.' }, 400, env);
+  }
+  if (name.length > 200 || email.length > 200 || childName.length > 100
+      || favoriteColor.length > 100 || special.length > 1000 || notes.length > 2000) {
+    return json({ error: 'One or more fields exceeded the maximum length.' }, 400, env);
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return json({ error: 'Please provide a valid email address.' }, 400, env);
+  }
+
+  const lines = [
+    'New family video request from hoelscherautomation.com',
+    '',
+    `Parent: ${name}`,
+    `Email: ${email}`,
+    `Child: ${childName}, age ${childAge}`,
+    `Theme: ${theme}`,
+    `Length: ${length}`,
+    `Favorite color: ${favoriteColor || '(not given)'}`,
+    `Special appearance: ${special || '(not given)'}`,
+    `Notes: ${notes || '(not given)'}`,
+    '',
+    '---',
+    `Reply directly to this email to respond to ${name}.`,
+  ];
+
+  const resendResp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: env.FROM_EMAIL,
+      to: env.TO_EMAIL,
+      reply_to: email,
+      subject: `Family video request: ${name}, ${theme}`,
+      text: lines.join('\n'),
+    }),
+  });
+
+  if (!resendResp.ok) {
+    const detail = await resendResp.text().catch(() => '');
+    console.error('Resend send failed', resendResp.status, detail);
+    return json({ error: 'Email delivery failed. Please try again or email directly.' }, 502, env);
+  }
+  return json({ ok: true }, 200, env);
+}
 
 function corsHeaders(env) {
   return {
