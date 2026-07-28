@@ -49,39 +49,18 @@ export default {
       return json({ error: 'Please provide a valid email address.' }, 400, env);
     }
 
-    const resendResp = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: env.FROM_EMAIL,
-        to: env.TO_EMAIL,
-        reply_to: email,
-        subject: `Hoelscher Automation contact: ${name}`,
-        text: [
-          `New contact form submission from hoelscherautomation.com`,
-          ``,
-          `Name: ${name}`,
-          `Email: ${email}`,
-          ``,
-          `Message:`,
-          message,
-          ``,
-          `---`,
-          `Reply directly to this email to respond to ${name}.`,
-        ].join('\n'),
-      }),
-    });
-
-    if (!resendResp.ok) {
-      const detail = await resendResp.text().catch(() => '');
-      console.error('Resend send failed', resendResp.status, detail);
-      return json({ error: 'Email delivery failed. Please try again or email directly.' }, 502, env);
-    }
-
-    return json({ ok: true }, 200, env);
+    return deliver(env, `Hoelscher Automation contact: ${name}`, email, [
+      `New contact form submission from hoelscherautomation.com`,
+      ``,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      ``,
+      `Message:`,
+      message,
+      ``,
+      `---`,
+      `Reply directly to this email to respond to ${name}.`,
+    ].join('\n'));
   },
 };
 
@@ -142,6 +121,10 @@ async function handleFamily(body, env) {
     `Reply directly to this email to respond to ${name}.`,
   ];
 
+  return deliver(env, `Family video request: ${name}, ${theme}`, email, lines.join('\n'));
+}
+
+async function deliver(env, subject, replyTo, text) {
   const resendResp = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -151,9 +134,9 @@ async function handleFamily(body, env) {
     body: JSON.stringify({
       from: env.FROM_EMAIL,
       to: env.TO_EMAIL,
-      reply_to: email,
-      subject: `Family video request: ${name}, ${theme}`,
-      text: lines.join('\n'),
+      reply_to: replyTo,
+      subject,
+      text,
     }),
   });
 
