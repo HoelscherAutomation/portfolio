@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import FamilyIntakeForm from '../components/FamilyIntakeForm.astro';
+
+const familyPhotos = [
+  { src: '/videos/family-photo-1.jpg', alt: 'Example photo: close up of a boy indoors by a window' },
+  { src: '/videos/family-photo-2.jpg', alt: 'Example photo: boy grinning in a kitchen' },
+  { src: '/videos/family-photo-3.jpg', alt: 'Example photo: full length shot of a boy in a backyard with a soccer ball' },
+  { src: '/videos/family-photo-4.jpg', alt: 'Example photo: boy reading on a couch in lamp light' },
+  { src: '/videos/family-photo-5.jpg', alt: 'Example photo: boy at a park on a cloudy day' },
+  { src: '/videos/family-photo-6.jpg', alt: 'Example photo: boy running outside, slightly blurry' },
+];
+
+const steps = [
+  {
+    num: '01',
+    title: 'Send us your photos',
+    body: '10 to 15 everyday photos of your kid. Different angles, different lighting, close up and far away. Phone photos are perfect, nothing fancy.',
+  },
+  {
+    num: '02',
+    title: 'We build their adventure',
+    body: 'An original story in an original world. Your kid picks the theme, and their favorite color, best friend, or beloved pet can make an appearance.',
+  },
+  {
+    num: '03',
+    title: 'Get their film in 3 to 5 days',
+    body: 'A short film delivered ready to watch, rewatch, and share with the grandparents.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'What photos work best?',
+    a: 'Variety beats quality. A close up by a window, a full body shot in the yard, one in dim light, one mid run. The more angles and lighting we see, the better your kid looks in every scene.',
+  },
+  {
+    q: "Are my kid's photos safe?",
+    a: 'Your photos are used only to make your film. They are never used for marketing, never used to train anything, and deleted on request.',
+  },
+  {
+    q: 'Is this made with AI?',
+    a: 'Yes. That is how one minute of cinema costs $99 and not $10,000. The example kid on this page is AI generated, so no real child appears here.',
+  },
+  {
+    q: 'How long does it take, and what if something looks off?',
+    a: 'Your film arrives in 3 to 5 days. If a scene does not look right, we regenerate it once, free.',
+  },
+];
+---
+<Base
+  title="Personalized Adventure Films for Kids | Hoelscher Automation"
+  description="Send 10 to 15 everyday photos and get a short film where your kid is the hero. Dragons, space, enchanted forests. $99 launch price, delivered in 3 to 5 days."
+  path="/family-films"
+>
+  <main class="max-w-3xl mx-auto px-8 py-20">
+    <div class="reveal">
+      <SectionLabel>Family films</SectionLabel>
+      <h1 class="mt-4 font-display text-4xl md:text-5xl font-semibold text-text-primary leading-tight">
+        Your kid. The hero of their own adventure.
+      </h1>
+      <p class="mt-6 text-lg text-text-secondary leading-relaxed">
+        We turn everyday photos into a short film where your child rides dragons, explores space, or walks an enchanted forest.
+      </p>
+
+      <video
+        id="family-player"
+        class="mt-8 w-full rounded-lg border border-border-subtle"
+        controls
+        playsinline
+        preload="none"
+        poster="/videos/poster-family.jpg"
+        src="/videos/demo-family.mp4"
+        aria-label="Demo video: a boy's dragon adventure, generated from everyday photos"
+      ></video>
+      <p class="mt-3 text-sm text-text-muted">
+        This whole film was made from a handful of ordinary photos. Original story, original world.
+      </p>
+    </div>
+
+    <div class="reveal mt-20">
+      <SectionLabel>How it works</SectionLabel>
+      <div class="mt-6 space-y-10">
+        {steps.map((s) => (
+          <div>
+            <div class="font-mono text-2xl text-brand-orange-bright mb-2">{s.num}</div>
+            <h2 class="font-display text-xl font-semibold text-text-primary mb-1">{s.title}</h2>
+            <p class="text-text-secondary leading-relaxed">{s.body}</p>
+            {s.num === '01' && (
+              <>
+                <div class="mt-4 grid grid-cols-3 sm:grid-cols-6 gap-2">
+                  {familyPhotos.map((p) => (
+                    <img
+                      src={p.src}
+                      alt={p.alt}
+                      loading="lazy"
+                      width="480"
+                      height="640"
+                      class="rounded border border-border-subtle aspect-[3/4] object-cover w-full"
+                    />
+                  ))}
+                </div>
+                <p class="mt-2 text-xs text-text-muted">
+                  The boy in these examples is AI generated, so no real child appears on this page. Your family's photos are used only for your film.
+                </p>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="reveal mt-20">
+      <SectionLabel>Pricing</SectionLabel>
+      <div id="family-pricing" class="mt-6 flex items-baseline gap-3 flex-wrap">
+        <span class="text-lg text-text-muted line-through"><span class="sr-only">Regular price </span>$199</span>
+        <span class="font-display text-3xl font-semibold text-brand-orange-bright">$99</span>
+        <span class="text-sm font-medium uppercase tracking-wide text-brand-orange-bright">launch price</span>
+      </div>
+      <p class="mt-2 text-text-secondary leading-relaxed">
+        For a one minute personalized film. Want something longer or more elaborate? Tell us below and we will quote it.
+      </p>
+      <p class="mt-1 text-text-secondary leading-relaxed">
+        Not happy with a scene? We regenerate it once, free.
+      </p>
+    </div>
+
+    <div class="reveal mt-16">
+      <FamilyIntakeForm />
+    </div>
+
+    <div class="reveal mt-20">
+      <SectionLabel>Questions</SectionLabel>
+      <div class="mt-6 space-y-8">
+        {faqs.map((f) => (
+          <div>
+            <h3 class="font-display text-lg font-semibold text-text-primary mb-1">{f.q}</h3>
+            <p class="text-text-secondary leading-relaxed">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </main>
+</Base>
