@@ -1,6 +1,5 @@
 ---
 import SectionLabel from './SectionLabel.astro';
-import FamilyIntakeForm from './FamilyIntakeForm.astro';
 
 const useCases = [
   {
@@ -18,15 +17,6 @@ const useCases = [
     title: 'Families',
     body: 'Personalized story videos for birthdays and special occasions, starring the people who matter.',
   },
-];
-
-const familyPhotos = [
-  { src: '/videos/family-photo-1.jpg', alt: 'Example photo: close up of a boy indoors by a window' },
-  { src: '/videos/family-photo-2.jpg', alt: 'Example photo: boy grinning in a kitchen' },
-  { src: '/videos/family-photo-3.jpg', alt: 'Example photo: full length shot of a boy in a backyard with a soccer ball' },
-  { src: '/videos/family-photo-4.jpg', alt: 'Example photo: boy reading on a couch in lamp light' },
-  { src: '/videos/family-photo-5.jpg', alt: 'Example photo: boy at a park on a cloudy day' },
-  { src: '/videos/family-photo-6.jpg', alt: 'Example photo: boy running outside, slightly blurry' },
 ];
 ---
 <section id="video" class="bg-bg/85 border-y border-border-subtle" data-scene="grid">
@@ -89,47 +79,21 @@ const familyPhotos = [
         Everyday photos in. One adventure out.
       </h3>
       <p class="mt-4 text-text-secondary leading-relaxed">
-        Send us 10 to 15 everyday photos of your kid, different angles, different lighting, close up and far away, and we make a short film where they are the hero. The photos below give you the idea: nothing fancy.
+        Personalized adventure films for kids, made from your photos.
       </p>
-
-      <div class="mt-6 grid grid-cols-3 sm:grid-cols-6 gap-2">
-        {familyPhotos.map((p) => (
-          <img
-            src={p.src}
-            alt={p.alt}
-            loading="lazy"
-            width="480"
-            height="640"
-            class="rounded border border-border-subtle aspect-[3/4] object-cover w-full"
-          />
-        ))}
-      </div>
-      <p class="mt-2 text-xs text-text-muted">
-        The boy in this demo is AI generated, so no real child appears here. Your family's photos are used only for your video.
-      </p>
-
-      <video
-        id="family-player"
-        class="mt-6 w-full rounded-lg border border-border-subtle"
-        controls
-        playsinline
-        preload="none"
-        poster="/videos/poster-family.jpg"
-        src="/videos/demo-family.mp4"
-        aria-label="Demo video: a boy's dragon adventure, generated from the six example photos above"
-      ></video>
-      <p class="mt-3 text-sm text-text-muted">
-        Every scene came from the six photos above. Original story, original world, produced end to end with our pipeline.
-      </p>
-      <div id="family-pricing" class="mt-8 flex items-baseline gap-3 flex-wrap">
-        <span class="text-lg text-text-muted line-through"><span class="sr-only">Regular price </span>$199</span>
-        <span class="font-display text-3xl font-semibold text-brand-orange-bright">$99</span>
-        <span class="text-sm font-medium uppercase tracking-wide text-brand-orange-bright">launch price</span>
-      </div>
-      <p class="mt-2 text-text-secondary leading-relaxed">
-        For a one minute personalized film. Want something longer or more elaborate? Tell us below and we will quote it.
-      </p>
-      <FamilyIntakeForm />
+      <a href="/family-films" class="block mt-6 max-w-md group">
+        <img
+          src="/videos/poster-family.jpg"
+          alt="A boy discovering a glowing dragon egg, a scene from our family demo film"
+          loading="lazy"
+          width="1280"
+          height="720"
+          class="rounded-lg border border-border-subtle group-hover:border-brand-orange transition-colors duration-default w-full"
+        />
+      </a>
+      <a href="/family-films" class="inline-block mt-4 text-sm font-medium text-brand-orange-bright hover:text-brand-orange transition-colors duration-default">
+        See family films →
+      </a>
     </div>
 
     <div class="reveal mt-20">
